@@ -1,0 +1,188 @@
+{
+  "channel": "station:wbor",
+  "pub": {
+    "data": {
+      "np": {
+        "station": {
+          "id": 2,
+          "name": "WBOR 91.1 FM",
+          "shortcode": "wbor",
+          "description": "Bowdoin College - Polar Bear Radio since 1941",
+          "frontend": "icecast",
+          "backend": "none",
+          "timezone": "America\/New_York",
+          "listen_url": "https:\/\/listen.wbor.org",
+          "url": "https:\/\/wbor.org\/",
+          "public_player_url": "https:\/\/azura.wbor.org\/public\/wbor",
+          "playlist_pls_url": "https:\/\/azura.wbor.org\/public\/wbor\/playlist.pls",
+          "playlist_m3u_url": "https:\/\/azura.wbor.org\/public\/wbor\/playlist.m3u",
+          "is_public": true,
+          "mounts": [
+            {
+              "id": 3,
+              "name": "WBOR 91.1 FM (192kbps MP3)",
+              "url": "https:\/\/listen.wbor.org",
+              "bitrate": null,
+              "format": null,
+              "listeners": {
+                "total": 16,
+                "unique": 16,
+                "current": 16
+              },
+              "path": "\/stream",
+              "is_default": true
+            }
+          ],
+          "remotes": [],
+          "hls_enabled": false,
+          "hls_is_default": false,
+          "hls_url": null,
+          "hls_listeners": 0
+        },
+        "listeners": {
+          "total": 16,
+          "unique": 16,
+          "current": 16
+        },
+        "live": {
+          "is_live": false,
+          "streamer_name": "",
+          "broadcast_start": null,
+          "art": null
+        },
+        "now_playing": {
+          "sh_id": 152198,
+          "played_at": 1735491846,
+          "duration": 0,
+          "playlist": "",
+          "streamer": "",
+          "is_request": false,
+          "song": {
+            "id": "c27342dd6f5ccdfc906418c91b899d20",
+            "art": "https:\/\/coverartarchive.org\/release\/dc689282-933e-406c-ad5d-172489317594\/17106893138-1200.jpg",
+            "custom_fields": [],
+            "text": "New Swears - Comfortably Hungover",
+            "artist": "New Swears",
+            "title": "Comfortably Hungover",
+            "album": "",
+            "genre": "",
+            "isrc": "",
+            "lyrics": ""
+          },
+          "elapsed": 14,
+          "remaining": 0
+        },
+        "playing_next": null,
+        "song_history": [
+          {
+            "sh_id": 152197,
+            "played_at": 1735491672,
+            "duration": 174,
+            "playlist": "",
+            "streamer": "",
+            "is_request": false,
+            "song": {
+              "id": "31316889a9dc5d0a01dfb3f26d900641",
+              "art": "https:\/\/coverartarchive.org\/release\/9bb00350-b823-4d75-8127-14a178a35f33\/19095149347-1200.jpg",
+              "custom_fields": [],
+              "text": "Mikhael Paskalev - Bad Boy",
+              "artist": "Mikhael Paskalev",
+              "title": "Bad Boy",
+              "album": "",
+              "genre": "",
+              "isrc": "",
+              "lyrics": ""
+            }
+          },
+          {
+            "sh_id": 152196,
+            "played_at": 1735491659,
+            "duration": 13,
+            "playlist": "",
+            "streamer": "",
+            "is_request": false,
+            "song": {
+              "id": "6d148137e7e8e86c7ddf324f95162f7a",
+              "art": "https:\/\/azura.wbor.org\/static\/uploads\/album_art.1722634311.png",
+              "custom_fields": [],
+              "text": "Joi Veer - Whistling Kisses",
+              "artist": "Joi Veer",
+              "title": "Whistling Kisses",
+              "album": "",
+              "genre": "",
+              "isrc": "",
+              "lyrics": ""
+            }
+          },
+          {
+            "sh_id": 152195,
+            "played_at": 1735491443,
+            "duration": 216,
+            "playlist": "",
+            "streamer": "",
+            "is_request": false,
+            "song": {
+              "id": "9013670f88e4606fffde9e31093c7879",
+              "art": "https:\/\/azura.wbor.org\/static\/uploads\/album_art.1722634311.png",
+              "custom_fields": [],
+              "text": "together PANGEA - Friend of Nothing",
+              "artist": "together PANGEA",
+              "title": "Friend of Nothing",
+              "album": "",
+              "genre": "",
+              "isrc": "",
+              "lyrics": ""
+            }
+          },
+          {
+            "sh_id": 152194,
+            "played_at": 1735491242,
+            "duration": 201,
+            "playlist": "",
+            "streamer": "",
+            "is_request": false,
+            "song": {
+              "id": "d366b7515e864ce15647dfddd1baf7ed",
+              "art": "https:\/\/coverartarchive.org\/release\/cad8a772-1892-4dde-a7d1-75ce5a4592a1\/40704045005-1200.jpg",
+              "custom_fields": [],
+              "text": "Black Rebel Motorcycle Club - Little Thing Gone Wild",
+              "artist": "Black Rebel Motorcycle Club",
+              "title": "Little Thing Gone Wild",
+              "album": "",
+              "genre": "",
+              "isrc": "",
+              "lyrics": ""
+            }
+          },
+          {
+            "sh_id": 152193,
+            "played_at": 1735491228,
+            "duration": 14,
+            "playlist": "",
+            "streamer": "",
+            "is_request": false,
+            "song": {
+              "id": "96619f08507ee19bda006f306b080255",
+              "art": "https:\/\/coverartarchive.org\/release\/7f8cfff2-1e4f-4536-a5a3-2034b6cefa3d\/22497114360-1200.jpg",
+              "custom_fields": [],
+              "text": "Katy Perry - Swish Swish",
+              "artist": "Katy Perry",
+              "title": "Swish Swish",
+              "album": "",
+              "genre": "",
+              "isrc": "",
+              "lyrics": ""
+            }
+          }
+        ],
+        "is_online": true,
+        "cache": "event"
+      },
+      "triggers": [
+        "listener_gained"
+      ],
+      "current_time": 1735491856
+    },
+    "offset": 106752
+  }
+}
