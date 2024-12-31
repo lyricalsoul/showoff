@@ -6,6 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +29,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
 import org.jetbrains.jewel.ui.component.copyWithSize
 import showoff.composeapp.generated.resources.Res
-import showoff.composeapp.generated.resources.compose_multiplatform
+import showoff.composeapp.generated.resources.pause
 
 // preview for now playing card
 @Preview()
@@ -66,48 +68,47 @@ fun AudioControlBar(song: SongInfo, currentStation: RadioStation) {
             Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                Modifier.clip(RoundedCornerShape(8.dp)).background(backgroundColor())
+            Row(
+                Modifier.fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                AsyncImage(
-                    model = song.art,
-                    placeholder = painterResource(currentStation.smallLogoDrawable),
-                    contentDescription = song.text,
-                )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.Start
-            ) {
-                // title in bold
-                Text(song.title, style = h3TextStyle().copyWithSize(16.sp))
-                // artist in italic
-                Text(song.artist, style = h4TextStyle().copyWithSize(12.sp))
-            }
-
-            Spacer(modifier = Modifier.width(16.dp))
-            // play/pause button
-            Image(
-                painterResource(Res.drawable.compose_multiplatform),
-                contentDescription = "Play/Pause",
-                modifier = Modifier
-                    .size(40.dp)
-                    .clickable(onClick = {
+                Box(
+                    Modifier.clip(RoundedCornerShape(8.dp)).background(backgroundColor())
+                ) {
+                    AsyncImage(
+                        model = song.art,
+                        placeholder = painterResource(currentStation.smallLogoDrawable),
+                        contentDescription = song.text,
+                    )
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Column(
+                    Modifier.fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    // title in bold
+                    Text(song.title, style = h3TextStyle().copyWithSize(16.sp))
+                    // artist in italic
+                    Text(song.artist, style = h4TextStyle().copyWithSize(12.sp))
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Box(
+                    Modifier.fillMaxHeight(),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    // play/pause button
+                    PauseButton(isPaused) {
                         isPaused = !isPaused
-                        if (isPaused) Showoff().audioManager.stop()
+                        if (isPaused) Showoff().audioManager.pause()
                         else {
                             GlobalScope.launch {
-                                Showoff().audioManager.play(null)
+                                Showoff().audioManager.resume()
                             }
                         }
-                    })
-                    .align(Alignment.Bottom),
-                colorFilter = ColorFilter.tint(
-                    androidx.compose.ui.graphics.Color.White
-                )
-            )
+                    }
+                }
+            }
         }
     }
 }
@@ -128,9 +129,39 @@ fun AudioControlBarSkeleton() {
             horizontalAlignment = Alignment.Start
         ) {
             // title in bold
-            Text("Obtaining current track...", style = h3TextStyle().copyWithSize(16.sp))
+            Text("Obtaining current track...", style = h3TextStyle().copyWithSize(14.sp))
         }
 
         Spacer(modifier = Modifier.width(16.dp))
+    }
+}
+
+
+@Composable
+fun PauseButton(isPaused: Boolean, onToggle: () -> Unit) {
+    // this is needed because there's no overlap between the ImageVector type and the Painter type. Even if you normalize them to the same type, typechecking will still fail when casting
+    val contentDescription = "Play/Pause"
+    val modifier = Modifier
+        .size(21.dp)
+        .clickable(onClick = onToggle)
+
+    val colorFilter = ColorFilter.tint(
+        androidx.compose.ui.graphics.Color.White
+    )
+
+    if (isPaused) {
+        Image(
+            Icons.Filled.PlayArrow,
+            contentDescription = contentDescription,
+            modifier = modifier,
+            colorFilter = colorFilter
+        )
+    } else {
+        Image(
+            painterResource(Res.drawable.pause),
+            contentDescription = contentDescription,
+            modifier = modifier,
+            colorFilter = colorFilter
+        )
     }
 }

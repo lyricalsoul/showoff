@@ -6,25 +6,38 @@ import dev.cbyrne.kdiscordipc.data.activity.Activity
 import io.lyricalsoul.integrations.discord.PresenceClient
 import io.lyricalsoul.radio.models.RadioStation
 import io.lyricalsoul.radio.models.payloads.NowPlayingInfo
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class DesktopPresenceClient : PresenceClient() {
     private val showoffClientId = "1322777308800745494"
     private val ipc: KDiscordIPC = KDiscordIPC(showoffClientId)
+    private var isRunning = false
 
     override val isAvailable: Boolean = true
 
-    override suspend fun connect() {
-        ipc.on<ReadyEvent> {
-            println("Ready! (${data.user.username}#${data.user.discriminator})")
+    init {
+        GlobalScope.launch {
+            ipc.on<ReadyEvent> {
+                println("Ready! (${data.user.username}#${data.user.discriminator})")
+                isRunning = true
+            }
         }
+    }
 
-        ipc.connect()
+    override suspend fun connect() {
+        runCatching {
+            ipc.connect()
+        }.onFailure {
+            println("Failed to connect to Discord IPC: ${it.message}")
+        }
     }
 
     override suspend fun updatePresence(
         np: NowPlayingInfo,
         station: RadioStation
     ) {
+        if (!isRunning) return
         val song = np.nowPlaying.song
         val songName = song.title
         val artistName = song.artist

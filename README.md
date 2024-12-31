@@ -9,7 +9,7 @@ proudly written in kotlin with compose multiplatform + jetbrains jewel
 - [x] play radio automatically
 - [x] show current song & update in realtime
 - [x] recent tracks
-- [ ] pause/resume current stream
+- [x] pause/resume current stream
 - [ ] add new stations on runtime
 - [ ] add scrobbling to last.fm
 - [ ] toggle discord ipc
