@@ -10,7 +10,8 @@ import java.io.InputStream
 import java.net.URL
 
 class ShowoffJVMAudioPlayer(
-    stream: InputStream,
+    private var stream: InputStream,
+    private val url: String,
     device: AudioDevice? = null
 ) {
     private val bitstream = Bitstream(stream)
@@ -33,7 +34,7 @@ class ShowoffJVMAudioPlayer(
         }
     }
 
-    constructor(url: String, device: AudioDevice? = null) : this(getInputStream(url), device)
+    constructor(url: String, device: AudioDevice? = null) : this(getInputStream(url), url, device)
 
     @Synchronized
     fun stop() {
@@ -102,8 +103,20 @@ class ShowoffJVMAudioPlayer(
             bitstream.closeFrame()
             true
         } catch (ex: RuntimeException) {
+            // if it was Stream closed, reopen it and begin playing again
+            if (ex.message?.contains("Stream closed") == true) {
+                Thread.sleep(3000)
+                restart()
+                return true
+            }
             throw RuntimeException("Failed to decode frame", ex)
         }
+    }
+
+    private fun restart() {
+        stop()
+        stream = getInputStream(url)
+        playStream()
     }
 
     companion object {
