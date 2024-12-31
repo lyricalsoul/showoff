@@ -21,6 +21,7 @@ import io.lyricalsoul.radio.models.events.AzuraSongChangedEvent
 import io.lyricalsoul.radio.models.payloads.SongInfo
 import io.lyricalsoul.ui.*
 import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
 import org.jetbrains.jewel.intui.standalone.theme.dark
@@ -29,6 +30,8 @@ import org.jetbrains.jewel.intui.window.styling.dark
 import org.jetbrains.jewel.ui.ComponentStyling
 import org.jetbrains.jewel.window.DecoratedWindow
 import org.jetbrains.jewel.window.styling.DecoratedWindowStyle
+import showoff.composeapp.generated.resources.Res
+import showoff.composeapp.generated.resources.wbor
 import kotlin.system.exitProcess
 
 @Composable
@@ -43,6 +46,7 @@ fun ShowoffTheme(isDesktop: Boolean, content: @Composable () -> Unit) {
                 onCloseRequest = { runBlocking { exitProcess(0) } },
                 title = "Showoff Radio",
                 style = DecoratedWindowStyle.dark(),
+                icon = painterResource(Res.drawable.wbor),
                 content = {
                     TitleBarView()
                     content()
