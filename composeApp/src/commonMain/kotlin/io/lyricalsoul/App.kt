@@ -13,7 +13,10 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import io.lyricalsoul.composable.*
+import io.lyricalsoul.composable.NowPlayingCard
+import io.lyricalsoul.composable.PreviouslyPlayedList
+import io.lyricalsoul.composable.StationBar
+import io.lyricalsoul.composable.TitleBarView
 import io.lyricalsoul.radio.models.RadioStation
 import io.lyricalsoul.radio.models.events.AzuraConnectedEvent
 import io.lyricalsoul.radio.models.events.AzuraListenerCountChangedEvent
@@ -95,68 +98,74 @@ fun App() {
             }
         }
 
-        Column(
-            Modifier.fillMaxSize().background(backgroundColor()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            // connected/is connecting text
-            if (currentStation == null) {
-                Column(
-                    Modifier.fillMaxWidth().fillMaxHeight().background(backgroundColor()),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text("Hang tight!", style = h2TextStyle())
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text("Connecting to station...", style = h4TextStyle())
-                }
-            } else {
-                StationBar(currentStation!!)
-            }
-
-            // centralize the now playing card
-            // make this a row: left side is the now playing card, right side is the song history
-            Row(
-                Modifier.fillMaxWidth().fillMaxHeight(0.85f),
-                horizontalArrangement = Arrangement.SpaceBetween
+        if (currentStation == null) {
+            Column(
+                Modifier.fillMaxWidth().fillMaxHeight().background(backgroundColor()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Box(
-                    Modifier
-                        .fillMaxWidth(0.55f)
-                        .fillMaxHeight()
-                        .background(texturedBackgroundBrush())
-                        .clip(RoundedCornerShape(8.dp))
-                        .border(Dp.Hairline, darkenColor(getTitleBarColor(), 0.01f), RoundedCornerShape(8.dp)),
-                    contentAlignment = Alignment.Center,
+                Text("Hang tight!", style = h2TextStyle())
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("Connecting to station...", style = h4TextStyle())
+            }
+        } else {
+            Column(
+                Modifier.fillMaxSize().background(backgroundColor()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                // centralize the now playing card
+                // make this a row: left side is the now playing card, right side is the song history
+                Row(
+                    Modifier.fillMaxWidth().fillMaxHeight(0.85f),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    nowPlayingSong?.let {
-                        Box(Modifier.fillMaxSize().blur(8.dp))
-                        NowPlayingCard(it, currentStation!!)
+                    Box(
+                        Modifier
+                            .fillMaxWidth(0.55f)
+                            .fillMaxHeight()
+                            .background(texturedBackgroundBrush())
+                            .clip(RoundedCornerShape(8.dp))
+                            .border(Dp.Hairline, darkenColor(getTitleBarColor(), 0.01f), RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        nowPlayingSong?.let {
+                            Box(Modifier.fillMaxSize().blur(8.dp))
+                            NowPlayingCard(it, currentStation!!)
+                        }
+                    }
+
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (latestPlayedTracks.isNotEmpty()) {
+                            PreviouslyPlayedList(latestPlayedTracks)
+                        }
                     }
                 }
 
                 Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
-                    contentAlignment = Alignment.Center,
+                    Modifier.fillMaxHeight()
                 ) {
-                    if (latestPlayedTracks.isNotEmpty()) {
-                        PreviouslyPlayedList(latestPlayedTracks)
-                    }
-                }
-            }
-
-            Box(
-                Modifier.fillMaxHeight()
-            ) {
-                nowPlayingSong?.let {
-                    AudioControlBar(
-                        it,
-                        currentStation!!
+                    StationBar(
+                        currentStation!!,
+                        listenerInfo
                     )
-                } ?: AudioControlBarSkeleton()
+                }
+
+//                Box(
+//                    Modifier.fillMaxHeight()
+//                ) {
+//                    nowPlayingSong?.let {
+//                        AudioControlBar(
+//                            it,
+//                            currentStation!!
+//                        )
+//                    } ?: AudioControlBarSkeleton()
+//                }
             }
         }
     }

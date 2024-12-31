@@ -4,12 +4,13 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import io.lyricalsoul.Showoff
 import io.lyricalsoul.radio.RadioManagerStations
 import io.lyricalsoul.radio.models.RadioStation
 import io.lyricalsoul.radio.models.payloads.SongInfo
@@ -45,6 +46,8 @@ fun NowPlayingCardPreview() {
 // a card that shows what's playing right now. 2 rows: album image, the other is a column with song title, artist, album
 @Composable
 fun NowPlayingCard(song: SongInfo, currentStation: RadioStation) {
+    var isPaused by remember { mutableStateOf(false) }
+
     Column(
         Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -75,6 +78,19 @@ fun NowPlayingCard(song: SongInfo, currentStation: RadioStation) {
             Spacer(modifier = Modifier.height(4.dp))
             // station name
             Text(currentStation.name)
+            Spacer(modifier = Modifier.height(12.dp))
+            Box(
+                contentAlignment = Alignment.CenterStart
+            ) {
+                // play/pause button
+                PauseButton(isPaused) {
+                    isPaused = !isPaused
+                    if (isPaused) Showoff().audioManager.pause()
+                    else {
+                        Showoff().audioManager.resume()
+                    }
+                }
+            }
         }
     }
 }

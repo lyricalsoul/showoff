@@ -38,6 +38,22 @@ fun texturedBackgroundBrush(): Brush {
     }
 }
 
+@Composable
+fun invertedTexturedBackgroundBrush(): Brush {
+    val stl = TitleBarStyle.dark()
+
+    with(LocalDensity.current) {
+        return Brush.horizontalGradient(
+            0.0f to backgroundColor(),
+            0.5f to darkenColor(getTitleBarColor(), 0.01f).popBlue(0.03f),
+            0.65f to getTitleBarColor(),
+            1.0f to backgroundColor(),
+            startX = stl.metrics.gradientStartX.toPx(),
+            endX = stl.metrics.gradientEndX.toPx()
+        )
+    }
+}
+
 private fun Color.popBlue(fl: Float): Color {
     return Color(
         red - fl,
