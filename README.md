@@ -6,6 +6,9 @@ proudly written in kotlin with compose multiplatform + jetbrains jewel
 
 ## roadmap
 
+- [x] play radio automatically
+- [x] show current song & update in realtime
+- [x] recent tracks
 - [ ] pause/resume current stream
 - [ ] add new stations on runtimw
 - [ ] add scrobbling to last.fm
