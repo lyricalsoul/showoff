@@ -8,11 +8,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+val mainNetworkManager = NetworkingManager()
+val mainRadioManager = RadioManager(mainNetworkManager.client)
+
 class Showoff {
     private val platform = getPlatform()
-    private val networkManager = NetworkingManager()
+    private val networkManager = mainNetworkManager
     var audioManager = getAudioController()
-    val radioManager = RadioManager(networkManager.client)
+    val radioManager = mainRadioManager
 
     val isRPCAvailable: Boolean
         get() = platform.rpcClient.isAvailable
