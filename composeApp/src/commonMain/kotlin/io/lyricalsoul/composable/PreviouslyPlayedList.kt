@@ -2,23 +2,25 @@ package io.lyricalsoul.composable
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.Composable
-import io.lyricalsoul.radio.models.payloads.SongInfo
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
-import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import io.lyricalsoul.ui.*
+import coil3.compose.AsyncImage
+import io.lyricalsoul.radio.models.payloads.SongInfo
+import io.lyricalsoul.ui.Text
+import io.lyricalsoul.ui.backgroundColor
+import io.lyricalsoul.ui.h3TextStyle
+import io.lyricalsoul.ui.h4TextStyle
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
 import org.jetbrains.jewel.ui.component.copyWithSize
 

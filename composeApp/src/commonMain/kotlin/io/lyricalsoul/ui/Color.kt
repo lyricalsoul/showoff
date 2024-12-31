@@ -1,8 +1,8 @@
 package io.lyricalsoul.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import org.jetbrains.jewel.intui.window.styling.dark
 import org.jetbrains.jewel.window.styling.TitleBarStyle

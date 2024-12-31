@@ -13,7 +13,10 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import io.lyricalsoul.radio.RadioManagerStations
 import io.lyricalsoul.radio.models.RadioStation
-import io.lyricalsoul.ui.*
+import io.lyricalsoul.ui.Text
+import io.lyricalsoul.ui.h2TextStyle
+import io.lyricalsoul.ui.h4TextStyle
+import io.lyricalsoul.ui.translucentBlack
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
 import org.jetbrains.jewel.ui.component.copyWithSize

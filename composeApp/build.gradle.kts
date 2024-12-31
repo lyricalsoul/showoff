@@ -1,7 +1,4 @@
-import com.android.utils.jvmArchitecture
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val ktor_version: String by project
 val room_version = "2.7.0-alpha12"

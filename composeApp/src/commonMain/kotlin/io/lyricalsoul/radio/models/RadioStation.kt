@@ -1,7 +1,6 @@
 package io.lyricalsoul.radio.models
 
 import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.jewel.ui.icon.PathIconKey
 
 data class RadioStation(
     val name: String,

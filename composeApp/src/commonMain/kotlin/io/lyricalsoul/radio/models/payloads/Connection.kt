@@ -1,14 +1,7 @@
 package io.lyricalsoul.radio.models.payloads
 
 import kotlinx.serialization.Serializable
-/* connected station info
 
-"recoverable": true,
-        "epoch": "1734025715",
-        "offset": 103235,
-        "positioned": true
-
- */
 @Serializable
 data class SubscribedStation(
     val recoverable: Boolean,

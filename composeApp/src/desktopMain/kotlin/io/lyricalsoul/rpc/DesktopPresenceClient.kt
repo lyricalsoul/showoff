@@ -6,8 +6,6 @@ import dev.cbyrne.kdiscordipc.data.activity.Activity
 import io.lyricalsoul.integrations.discord.PresenceClient
 import io.lyricalsoul.radio.models.RadioStation
 import io.lyricalsoul.radio.models.payloads.NowPlayingInfo
-import io.lyricalsoul.radio.models.payloads.NowPlayingTrackInfo
-import io.lyricalsoul.radio.models.payloads.SongInfo
 
 class DesktopPresenceClient : PresenceClient() {
     private val showoffClientId = "1322777308800745494"
@@ -23,7 +21,7 @@ class DesktopPresenceClient : PresenceClient() {
         ipc.connect()
     }
 
-    override suspend fun updatePresence (
+    override suspend fun updatePresence(
         np: NowPlayingInfo,
         station: RadioStation
     ) {

@@ -10,7 +10,7 @@ abstract class PresenceClient {
         error("Discord IPC is not available on this platform.")
     }
 
-    open suspend fun updatePresence (
+    open suspend fun updatePresence(
         np: NowPlayingInfo,
         station: RadioStation
     ) {

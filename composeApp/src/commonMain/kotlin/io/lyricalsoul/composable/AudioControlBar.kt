@@ -6,27 +6,28 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import io.lyricalsoul.Showoff
 import io.lyricalsoul.radio.RadioManagerStations
 import io.lyricalsoul.radio.models.RadioStation
 import io.lyricalsoul.radio.models.payloads.SongInfo
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
-import showoff.composeapp.generated.resources.Res
-import showoff.composeapp.generated.resources.compose_multiplatform
-import androidx.compose.runtime.*
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.unit.*
-import io.lyricalsoul.Showoff
 import io.lyricalsoul.ui.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.jewel.intui.standalone.theme.IntUiTheme
 import org.jetbrains.jewel.ui.component.copyWithSize
+import showoff.composeapp.generated.resources.Res
+import showoff.composeapp.generated.resources.compose_multiplatform
 
 // preview for now playing card
 @Preview()

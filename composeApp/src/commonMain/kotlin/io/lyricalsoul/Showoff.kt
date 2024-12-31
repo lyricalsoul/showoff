@@ -3,9 +3,7 @@ package io.lyricalsoul
 import io.lyricalsoul.networking.NetworkingManager
 import io.lyricalsoul.radio.RadioManager
 import io.lyricalsoul.radio.models.RadioStation
-import io.lyricalsoul.radio.models.events.AzuracastEvent
 import io.lyricalsoul.radio.models.payloads.NowPlayingInfo
-import io.lyricalsoul.radio.models.payloads.SongInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,13 +20,13 @@ class Showoff {
     val isDesktop: Boolean
         get() = platform.isDesktop
 
-    suspend fun connectDiscordRPC () {
+    suspend fun connectDiscordRPC() {
         if (!platform.rpcClient.isAvailable) return
 
         platform.rpcClient.connect()
     }
 
-    fun attemptPresenceUpdate (station: RadioStation, np: NowPlayingInfo) {
+    fun attemptPresenceUpdate(station: RadioStation, np: NowPlayingInfo) {
         if (!platform.rpcClient.isAvailable) return
 
         // launch coroutine to update presence
@@ -37,7 +35,7 @@ class Showoff {
         }
     }
 
-    fun playRadioFromStream (np: NowPlayingInfo) {
+    fun playRadioFromStream(np: NowPlayingInfo) {
         CoroutineScope(Dispatchers.Default).launch {
             audioManager.play(np.station.mounts.first().url)
         }
