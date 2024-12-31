@@ -12,7 +12,7 @@ import java.net.URL
 class ShowoffJVMAudioPlayer(
     private var stream: InputStream,
     private val url: String,
-    device: AudioDevice? = null
+    private var device: AudioDevice? = null
 ) {
     private val bitstream = Bitstream(stream)
     private val decoder = Decoder()
@@ -29,12 +29,14 @@ class ShowoffJVMAudioPlayer(
         get() = audio != null && !paused
 
     init {
-        audio = device ?: FactoryRegistry.systemRegistry().createAudioDevice().also {
-            it.open(decoder)
-        }
+        audio = device ?: createAudioDevice()
     }
 
     constructor(url: String, device: AudioDevice? = null) : this(getInputStream(url), url, device)
+
+    private fun createAudioDevice() = FactoryRegistry.systemRegistry().createAudioDevice().also {
+        it.open(decoder)
+    }
 
     @Synchronized
     fun stop() {
@@ -85,6 +87,7 @@ class ShowoffJVMAudioPlayer(
     }
 
     private fun decodeFrame(): Boolean {
+        if (closed) return false
         return try {
             val header = bitstream.readFrame() ?: return false
 
@@ -116,6 +119,7 @@ class ShowoffJVMAudioPlayer(
     private fun restart() {
         stop()
         stream = getInputStream(url)
+        device = createAudioDevice()
         playStream()
     }
 
