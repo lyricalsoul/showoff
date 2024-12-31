@@ -71,7 +71,7 @@ fun PreviouslyPlayedList(songs: List<SongInfo>) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
-                    Modifier.clip(RoundedCornerShape(12.dp))
+                    Modifier.clip(RoundedCornerShape(8.dp))
                 ) {
                     AsyncImage(
                         model = song.art,
