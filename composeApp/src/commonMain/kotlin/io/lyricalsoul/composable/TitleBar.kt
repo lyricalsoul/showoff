@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import io.lyricalsoul.radio.RadioManager
 import io.lyricalsoul.radio.RadioManagerStations
+import io.lyricalsoul.ui.getTitleBarColor
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.jewel.intui.window.styling.dark
 import java.awt.Desktop
@@ -35,7 +36,8 @@ import showoff.composeapp.generated.resources.wbor
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DecoratedWindowScope.TitleBarView() {
-    TitleBar(Modifier.newFullscreenControls(), gradientStartColor = Color(0xCC702963),
+    TitleBar(
+        Modifier.newFullscreenControls(), gradientStartColor = getTitleBarColor(),
         style = TitleBarStyle.dark()
     ) {
         Row(Modifier.align(Alignment.Start)) {
@@ -66,7 +68,11 @@ fun DecoratedWindowScope.TitleBarView() {
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Icon(painterResource(RadioManagerStations.currentStation.smallLogoDrawable), null, modifier = Modifier.size(20.dp))
+                        Icon(
+                            painterResource(RadioManagerStations.currentStation.smallLogoDrawable),
+                            null,
+                            modifier = Modifier.size(20.dp)
+                        )
                         Text(RadioManagerStations.currentStation.name)
                     }
                 }

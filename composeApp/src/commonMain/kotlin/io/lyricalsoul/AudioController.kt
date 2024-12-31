@@ -1,6 +1,5 @@
 package io.lyricalsoul
 
-
 import io.lyricalsoul.integrations.discord.PresenceClient
 
 interface AudioController {

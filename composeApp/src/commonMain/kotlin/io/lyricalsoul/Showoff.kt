@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class Showoff {
     private val platform = getPlatform()
     private val networkManager = NetworkingManager()
-    private val audioManager = getAudioController()
+    var audioManager = getAudioController()
     val radioManager = RadioManager(networkManager.client)
 
     val isRPCAvailable: Boolean

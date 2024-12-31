@@ -38,6 +38,8 @@ kotlin {
 
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.androidx.datastore.preferences)
+            implementation(libs.androidx.datastore)
 
             implementation(libs.jewel.int.ui.standalone.x43)
             implementation(libs.jewel.int.ui.decorated.window.x43)
