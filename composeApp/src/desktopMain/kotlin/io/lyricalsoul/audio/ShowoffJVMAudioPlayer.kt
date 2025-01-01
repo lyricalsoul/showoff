@@ -26,6 +26,7 @@ class ShowoffJVMAudioPlayer(
         get() = complete
 
     val isPlaying: Boolean
+        @Synchronized
         get() = audio != null && !paused
 
     init {

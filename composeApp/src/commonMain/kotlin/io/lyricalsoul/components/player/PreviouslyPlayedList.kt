@@ -1,4 +1,4 @@
-package io.lyricalsoul.composable
+package io.lyricalsoul.components.player
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background

@@ -1,28 +1,27 @@
 package io.lyricalsoul
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.key
 import androidx.compose.ui.unit.dp
-import io.lyricalsoul.composable.NowPlayingCard
-import io.lyricalsoul.composable.PreviouslyPlayedList
-import io.lyricalsoul.composable.StationBar
-import io.lyricalsoul.composable.TitleBarView
-import io.lyricalsoul.radio.models.RadioStation
+import io.lyricalsoul.components.desktop.TitleBarView
 import io.lyricalsoul.radio.models.events.AzuraConnectedEvent
 import io.lyricalsoul.radio.models.events.AzuraListenerCountChangedEvent
 import io.lyricalsoul.radio.models.events.AzuraSongChangedEvent
-import io.lyricalsoul.radio.models.payloads.SongInfo
-import io.lyricalsoul.ui.*
+import io.lyricalsoul.ui.Text
+import io.lyricalsoul.ui.backgroundColor
+import io.lyricalsoul.ui.h2TextStyle
+import io.lyricalsoul.ui.h4TextStyle
+import io.lyricalsoul.viewmodel.MainViewModel
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.jewel.foundation.theme.JewelTheme
@@ -50,6 +49,9 @@ fun ShowoffTheme(isDesktop: Boolean, content: @Composable () -> Unit) {
                 title = "Showoff Radio",
                 style = DecoratedWindowStyle.dark(),
                 icon = painterResource(Res.drawable.wbor),
+                onKeyEvent = { event ->
+                    processKeyShortcuts(event)
+                },
                 content = {
                     TitleBarView()
                     content()
@@ -69,11 +71,6 @@ fun App() {
     val showoff = Showoff()
 
     ShowoffTheme(true) {
-        var nowPlayingSong by remember { mutableStateOf<SongInfo?>(null) }
-        var currentStation by remember { mutableStateOf<RadioStation?>(null) }
-        var listenerInfo by remember { mutableStateOf<AzuraListenerCountChangedEvent?>(null) }
-        var latestPlayedTracks by remember { mutableStateOf<List<SongInfo>>(emptyList()) }
-
         if (showoff.isRPCAvailable) {
             LaunchedEffect(Unit) {
                 showoff.connectDiscordRPC()
@@ -86,19 +83,19 @@ fun App() {
             radioManager.connectToStation(radioManager.stationList.first()) {
                 when (it) {
                     is AzuraSongChangedEvent -> {
-                        showoff.attemptPresenceUpdate(currentStation!!, it.nowPlaying)
+                        showoff.attemptPresenceUpdate(MainViewModel.currentStation!!, it.nowPlaying)
                         showoff.playRadioFromStream(it.nowPlaying)
-                        latestPlayedTracks = it.nowPlaying.songHistory.map { it.song }
-                        nowPlayingSong = it.nowPlaying.nowPlaying.song
+                        MainViewModel.latestPlayedTracks = it.nowPlaying.songHistory.map { it.song }
+                        MainViewModel.nowPlayingSong = it.nowPlaying.nowPlaying.song
                     }
 
-                    is AzuraListenerCountChangedEvent -> listenerInfo = it
-                    is AzuraConnectedEvent -> currentStation = it.station
+                    is AzuraListenerCountChangedEvent -> MainViewModel.listenerInfo = it
+                    is AzuraConnectedEvent -> MainViewModel.currentStation = it.station
                 }
             }
         }
 
-        if (currentStation == null) {
+        if (MainViewModel.currentStation == null) {
             Column(
                 Modifier.fillMaxWidth().fillMaxHeight().background(backgroundColor()),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -109,65 +106,23 @@ fun App() {
                 Text("Connecting to station...", style = h4TextStyle())
             }
         } else {
-            Column(
-                Modifier.fillMaxSize().background(backgroundColor()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                // centralize the now playing card
-                // make this a row: left side is the now playing card, right side is the song history
-                Row(
-                    Modifier.fillMaxWidth().fillMaxHeight(0.85f),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Box(
-                        Modifier
-                            .fillMaxWidth(0.55f)
-                            .fillMaxHeight()
-                            .background(texturedBackgroundBrush())
-                            .clip(RoundedCornerShape(8.dp))
-                            .border(Dp.Hairline, darkenColor(getTitleBarColor(), 0.01f), RoundedCornerShape(8.dp)),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        nowPlayingSong?.let {
-                            Box(Modifier.fillMaxSize().blur(8.dp))
-                            NowPlayingCard(it, currentStation!!)
-                        }
-                    }
-
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        if (latestPlayedTracks.isNotEmpty()) {
-                            PreviouslyPlayedList(latestPlayedTracks)
-                        }
-                    }
-                }
-
-                Box(
-                    Modifier.fillMaxHeight()
-                ) {
-                    StationBar(
-                        currentStation!!,
-                        listenerInfo
-                    )
-                }
-
-//                Box(
-//                    Modifier.fillMaxHeight()
-//                ) {
-//                    nowPlayingSong?.let {
-//                        AudioControlBar(
-//                            it,
-//                            currentStation!!
-//                        )
-//                    } ?: AudioControlBarSkeleton()
-//                }
+            key(MainViewModel.currentView) {
+                MainViewModel.current()
             }
         }
     }
 }
 
+private fun processKeyShortcuts(keyEvent: KeyEvent): Boolean {
+    return when (keyEvent.key) {
+        Key.MediaPlayPause -> {
+            Showoff().audioManager.togglePause()
+            true
+        }
+
+        else -> {
+            println("Unhandled key event: ${keyEvent.key}")
+            false
+        }
+    }
+}

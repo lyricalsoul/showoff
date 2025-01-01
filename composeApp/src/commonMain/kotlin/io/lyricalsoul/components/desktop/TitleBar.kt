@@ -1,13 +1,19 @@
-package io.lyricalsoul.composable
+package io.lyricalsoul.components.desktop
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import io.lyricalsoul.radio.RadioManagerStations
 import io.lyricalsoul.ui.getTitleBarColor
+import io.lyricalsoul.viewmodel.MainViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.jewel.intui.window.styling.dark
 import org.jetbrains.jewel.ui.component.*
@@ -79,6 +85,21 @@ fun DecoratedWindowScope.TitleBarView() {
                 }
             }
 
+            Tooltip({ Text("Settings") }) {
+                IconButton(
+                    { if (MainViewModel.atHome()) MainViewModel.navigateTo("Settings") else MainViewModel.navigateTo("Home") },
+                    Modifier.size(40.dp).padding(5.dp),
+                ) {
+                    Image(
+                        Icons.Filled.Settings,
+                        contentDescription = "Settings",
+                        modifier = Modifier.size(20.dp),
+                        colorFilter = ColorFilter.tint(
+                            Color.White
+                        )
+                    )
+                }
+            }
         }
     }
 }

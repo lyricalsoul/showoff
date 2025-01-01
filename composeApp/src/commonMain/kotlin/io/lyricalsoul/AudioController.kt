@@ -1,10 +1,13 @@
 package io.lyricalsoul
 
+import androidx.compose.runtime.MutableState
+
 interface AudioController {
+    var isCurrentlyPlaying: MutableState<Boolean>
     suspend fun play(url: String)
     fun stop()
     fun pause()
-    fun isCurrentlyPlaying(): Boolean
+    fun togglePause()
     fun resume()
 }
 

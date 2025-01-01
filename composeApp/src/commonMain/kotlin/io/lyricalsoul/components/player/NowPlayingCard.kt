@@ -1,10 +1,10 @@
-package io.lyricalsoul.composable
+package io.lyricalsoul.components.player
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,7 +46,7 @@ fun NowPlayingCardPreview() {
 // a card that shows what's playing right now. 2 rows: album image, the other is a column with song title, artist, album
 @Composable
 fun NowPlayingCard(song: SongInfo, currentStation: RadioStation) {
-    var isPaused by remember { mutableStateOf(false) }
+    var isPlaying = Showoff().audioManager.isCurrentlyPlaying
 
     Column(
         Modifier.fillMaxWidth(),
@@ -75,20 +75,16 @@ fun NowPlayingCard(song: SongInfo, currentStation: RadioStation) {
             // artist in italic
             Text(song.artist, style = h4TextStyle())
             // add spacing
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             // station name
             Text(currentStation.name)
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Box(
                 contentAlignment = Alignment.CenterStart
             ) {
                 // play/pause button
-                PauseButton(isPaused) {
-                    isPaused = !isPaused
-                    if (isPaused) Showoff().audioManager.pause()
-                    else {
-                        Showoff().audioManager.resume()
-                    }
+                PauseButton(isPlaying) {
+                    Showoff().audioManager.togglePause()
                 }
             }
         }
