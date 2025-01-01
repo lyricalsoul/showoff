@@ -2,6 +2,9 @@
 
 proudly written in kotlin with compose multiplatform + jetbrains jewel
 
+> [!NOTE]  
+> This project is still under development. Fixes and improvements are being made constantly.
+
 ![](.github/assets/img.png)
 
 ## roadmap
